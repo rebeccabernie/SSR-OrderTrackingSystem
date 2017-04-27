@@ -1,0 +1,5 @@
+package com.sales.security;
+
+public class SecurityConfig {
+
+}
