@@ -1,5 +1,6 @@
 package com.sales.models;
 
+// Imports
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 
 import org.hibernate.validator.constraints.NotBlank;
+
+// From project skeleton
 
 @Entity
 @Table(name="PRODUCTS")
