@@ -23,10 +23,28 @@ public class ProductController {
 	@Autowired
 	private ProductService prodS;
 
+	
+// List Products page ---------------------------------------------------------------------------------------
+	
+	// Uses get request, no save functionality needed
+	@RequestMapping(value = "/showProducts", method = RequestMethod.GET)
+	public String showProduct(Model m) {
+
+		// Gets all products in product arraylist
+		ArrayList<Product> products = prodS.getAll();
+
+		// Add to product model object
+		m.addAttribute("products", products);
+
+		return "displayProducts";
+	}
+	
+
+// Add Products page ---------------------------------------------------------------------------------------------
+
 	// Shows addProduct page using get request
 	@RequestMapping(value = "/addProduct", method = RequestMethod.GET)
 	public String getProduct(@ModelAttribute("product1") Product prod, HttpServletRequest http) {
-		System.out.println("HTTP Request = " + http.getMethod());
 		return "addProduct";
 	}
 
@@ -40,9 +58,6 @@ public class ProductController {
 			return "addProduct";
 		
 		} else {
-
-			System.out.println("HTTP Request = " + http.getMethod());
-
 			// Save Product to database
 			prodS.save(prod);
 
@@ -52,21 +67,9 @@ public class ProductController {
 			// Add to product model object
 			m.addAttribute("products", products);
 			
-			return "displayProduct";
+			return "displayProducts";
 		}
 	}
 
-	// Shows List of Products page, uses get request, no save functionality needed
-	@RequestMapping(value = "/showProducts", method = RequestMethod.GET)
-	public String showProduct(Model m) {
-
-		// Gets all products in product arraylist
-		ArrayList<Product> products = prodS.getAll();
-
-		// Add to product model object
-		m.addAttribute("products", products);
-
-		return "displayProduct";
-	}
 
 }

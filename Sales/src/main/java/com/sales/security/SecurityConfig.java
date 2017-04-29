@@ -14,17 +14,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.authorizeRequests()
-			.antMatchers("/showProducts", "/showCustomers", "/showOrders")
-			.hasRole("USER")
-			.and()
-			.formLogin();
+		httpSecurity.authorizeRequests().antMatchers("/showProducts", "/showCustomers", "/showOrders", "/addOrder",
+				"/addProduct", "/addCustomer").hasRole("USER").and().formLogin();
 	}
 
-	  @Autowired
-	  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-	    auth.inMemoryAuthentication()
-	      .withUser("user").password("user").roles("USER");
-	  }
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth)
+
+			throws Exception {
+		auth.inMemoryAuthentication().withUser("user").password("user").roles("USER");
+	}
 
 }
