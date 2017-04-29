@@ -68,7 +68,7 @@ public class OrderController {
 				e.getMessage();
 				
 				
-				return "redirect:addOrder.html";
+				return "redirect:addOrder.jsp";
 			}
 		}
 	}

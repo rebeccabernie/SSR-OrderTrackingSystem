@@ -34,6 +34,11 @@ public class OrderController {
 
 		ArrayList<Order> orders = os.getAll();
 
+		for (Order o1 : orders) {
+			System.out.println("Orderid=" + o1.getoId());
+
+		}
+
 		m.addAttribute("orders", orders);
 
 		return "displayOrders";
@@ -41,6 +46,7 @@ public class OrderController {
 
 	@RequestMapping(value = "/addOrder", method = RequestMethod.GET)
 	public String getOrder(@ModelAttribute("order1") Order o, HttpServletRequest h) {
+		System.out.println("HTTP Request = " + h.getMethod());
 		return "addOrder";
 	}
 
@@ -56,10 +62,16 @@ public class OrderController {
 
 			try {
 				
+				System.out.println("HTTP Request = " + h.getMethod());
+
 				os.save(o);
 
 				ArrayList<Order> orders = os.getAll();
-				
+
+				for (Order o1 : orders) {
+					System.out.println("Orderid=" + o1.getoId());
+				}
+
 				m.addAttribute("orders", orders);
 
 				return "displayOrders";
