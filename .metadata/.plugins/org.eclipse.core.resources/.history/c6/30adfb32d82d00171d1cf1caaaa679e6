@@ -1,0 +1,10 @@
+package com.sales.exceptions;
+
+@SuppressWarnings("serial")
+public class NonExistID extends Exception{
+	
+	public NonExistID(String message) {
+        super(message);
+    }
+
+}

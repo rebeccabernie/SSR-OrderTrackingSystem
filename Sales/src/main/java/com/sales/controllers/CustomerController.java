@@ -39,7 +39,7 @@ public class CustomerController {
 		// Add to customer model object
 		m.addAttribute("customers", customers);
 
-		return "displayCustomers";
+		return "showCustomers";
 	}
 	
 	
@@ -68,7 +68,7 @@ public class CustomerController {
 			// Add to customer model object
 			m.addAttribute("customers", customers);
 
-			return "displayCustomers";
+			return "showCustomers";
 		}
 	}
 	

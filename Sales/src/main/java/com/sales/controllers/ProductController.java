@@ -36,7 +36,7 @@ public class ProductController {
 		// Add to product model object
 		m.addAttribute("products", products);
 
-		return "displayProducts";
+		return "showProducts";
 	}
 	
 
@@ -67,7 +67,7 @@ public class ProductController {
 			// Add to product model object
 			m.addAttribute("products", products);
 			
-			return "displayProducts";
+			return "showProducts";
 		}
 	}
 

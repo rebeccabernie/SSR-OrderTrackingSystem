@@ -11,12 +11,12 @@
 		<br>
 		<table>
 			<tr>
-				<td>Product description:</td>
+				<td>Product Description:</td>
 				<td><form:input path="pDesc"></form:input></td>
 				<td><form:errors path="pDesc" cssClass="error"></form:errors></td>
 			</tr>
 			<tr>
-				<td>Quantity in stock:</td>
+				<td>Quantity in Stock:</td>
 				<td><form:input path="qtyInStock"></form:input></td>
 				<td><form:errors path="qtyInStock"></form:errors></td>
 			</tr>
@@ -27,7 +27,7 @@
 		</table>
 		<a href="/">Home</a>
 		<a href="/showOrders">List Orders</a>
-		<a href="/showProducts">List Product</a>
+		<a href="/showProducts">List Products</a>
 	</form:form>
 </body>
 </html>

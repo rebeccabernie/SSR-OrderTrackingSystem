@@ -1,5 +1,7 @@
 package com.sales.exceptions;
 
+import java.lang.Exception;
+
 @SuppressWarnings("serial")
 public class InvalidQty extends Exception{
 

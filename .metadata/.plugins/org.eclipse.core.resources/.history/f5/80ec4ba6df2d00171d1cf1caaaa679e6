@@ -1,0 +1,71 @@
+package com.sales.services;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sales.exceptions.EmptyID;
+import com.sales.exceptions.NonExistID;
+import com.sales.exceptions.InvalidQty;
+import com.sales.models.*;
+import com.sales.repositories.*;
+
+@Service
+public class OrderService {
+
+	@Autowired
+	private OrderInterface ordInt;
+	
+	@Autowired
+	private ProductInterface prodInt;
+	
+	@Autowired
+	private CustomerInterface custInt;
+
+	private Customer cust;
+	private Product prod;
+	
+	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	private Date date = new Date();
+
+	public ArrayList<Order> getAll() {
+
+		return (ArrayList<Order>) ordInt.findAll(); 
+	}
+
+	public Order save(Order ord) throws EmptyID, NonExistID, InvalidQty {
+
+		cust = custInt.findOne(ord.getCust().getcId());
+		prod = prodInt.findOne(ord.getProd().getpId());
+		
+		if (cust == null || prod == null) 
+		{
+			throw new EmptyID("Please enter an ID.");
+		}
+		else if (ord.getCust().getcId() != cust.getcId() || ord.getProd().getpId() != prod.getpId()) 
+		{
+			throw new NonExistID("This ID doesn't exist.");
+		}
+		else if(ord.getQty() > prod.getQtyInStock())
+		{
+			throw new InvalidQty("Not enough stock!");
+		}
+		else 
+		{
+			prod.setQtyInStock(prod.getQtyInStock() - ord.getQty());
+			
+			ord.setOrderDate(dateFormat.format(date));
+			
+			ord.getCust().setcName(cust.getcName());
+			
+			ord.getProd().setpDesc(prod.getpDesc());
+			
+			ordInt.save(ord);
+			
+			return ordInt.save(ord);
+		}
+	}
+}

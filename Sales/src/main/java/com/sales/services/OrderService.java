@@ -31,16 +31,19 @@ public class OrderService {
 	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	private Date date = new Date();
 
+	// Get Orders
 	public ArrayList<Order> getAll() {
 
 		return (ArrayList<Order>) ordInt.findAll(); 
 	}
 
-	public Order save(Order ord) throws EmptyID, NonExistID, InvalidQty {
+	// Add an Order
+	public Order save(Order ord) /*throws EmptyID, NonExistID, InvalidQty*/ {
 
 		cust = custInt.findOne(ord.getCust().getcId());
 		prod = prodInt.findOne(ord.getProd().getpId());
 		
+		/*
 		if (cust == null || prod == null) 
 		{
 			throw new EmptyID("Please enter an ID.");
@@ -54,7 +57,7 @@ public class OrderService {
 			throw new InvalidQty("Not enough stock!");
 		}
 		else 
-		{
+		{*/
 			prod.setQtyInStock(prod.getQtyInStock() - ord.getQty());
 			
 			ord.setOrderDate(dateFormat.format(date));
@@ -66,6 +69,6 @@ public class OrderService {
 			ordInt.save(ord);
 			
 			return ordInt.save(ord);
-		}
+		//}
 	}
 }

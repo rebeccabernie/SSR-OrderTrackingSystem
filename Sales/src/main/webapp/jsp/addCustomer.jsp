@@ -7,10 +7,10 @@
 </head>
 <body>
 	<form:form modelAttribute="customer1">
-		<h1>Add customer</h1>
+		<h1>Add New Customer</h1>
 		<table>
 			<tr>
-				<td>Customer name:</td>
+				<td>Cust Name:</td>
 				<td><form:input path="cName"></form:input></td>
 				<td><form:errors path="cName"></form:errors></td>
 			</tr>

@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +29,9 @@ public class OrderController {
 	
 	ModelAndView mav = new ModelAndView();
 
+	
+// Display Orders page --------------------------------------------------------------------------------
+	
 	@RequestMapping(value = "/showOrders", method = RequestMethod.GET)
 	public String showOrder(Model m) {
 
@@ -36,40 +39,36 @@ public class OrderController {
 
 		m.addAttribute("orders", orders);
 
-		return "displayOrders";
+		return "showOrders";
 	}
 
+
+// Add Order page -------------------------------------------------------------------------------------
+	
+	// Get the page
 	@RequestMapping(value = "/addOrder", method = RequestMethod.GET)
 	public String getOrder(@ModelAttribute("order1") Order o, HttpServletRequest h) {
 		return "addOrder";
 	}
 
+	// Save the info
 	@RequestMapping(value = "/addOrder", method = RequestMethod.POST)
 	public String postOrder(@Valid @ModelAttribute("order1") Order o,	
-	BindingResult result, HttpServletRequest h, Model m) {
-
+	BindingResult result, HttpServletRequest h, Model m) /*throws EmptyID, NonExistID, InvalidQty*/{
+		
 		if (result.hasErrors()) {
 
 			return "addOrder";
 
 		} else {
+				
+			os.save(o);
 
-			try {
-				
-				os.save(o);
+			ArrayList<Order> orders = os.getAll();
+			
+			m.addAttribute("orders", orders);
 
-				ArrayList<Order> orders = os.getAll();
-				
-				m.addAttribute("orders", orders);
-
-				return "displayOrders";
-			} catch (EmptyID | NonExistID | InvalidQty e) {
-				e.printStackTrace();
-				e.getMessage();
-				
-				
-				return "redirect:addOrder.html";
-			}
+			return "showOrders";
 		}
 	}
 }

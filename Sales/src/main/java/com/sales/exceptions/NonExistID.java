@@ -1,9 +1,6 @@
 package com.sales.exceptions;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.ModelAndView;
+import java.lang.Exception;
 
 @SuppressWarnings("serial")
 public class NonExistID extends Exception{

@@ -23,7 +23,7 @@
 				<td><form:errors path="qty"></form:errors></td>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="submit" value="Add" /></td>
+				<td colspan="2"><input type="submit" value="Order" /></td>
 			</tr>
 		</table>
 		<a href="/">Home</a>
