@@ -12,17 +12,18 @@ import com.sales.repositories.ProductInterface;
 public class ProductService {
 	
 	@Autowired
-	private ProductInterface productInterface;
+	private ProductInterface prodInt;
 	
-	// Add a Product
-	public Product save(Product prod) {
-		
-		return productInterface.save(prod);
-	}
-	
-	// Get Products
 	public ArrayList<Product> getAll() {
 
-		return (ArrayList<Product>) productInterface.findAll();
+		// Gets all products from the CRUDRepository for products -> ProductInterface
+		return (ArrayList<Product>) prodInt.findAll();
 	}
+	
+	public Product save(Product prod) {
+		
+		// Passes product to be saved to the CRUDRepo for products
+		return prodInt.save(prod);
+	}
+	
 }

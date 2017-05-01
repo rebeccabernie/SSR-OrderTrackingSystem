@@ -12,17 +12,18 @@ import com.sales.repositories.CustomerInterface;
 public class CustomerService {
 
 	@Autowired
-	private CustomerInterface customerInterface;
+	private CustomerInterface custInt;
 
 	public ArrayList<Customer> getAll() {
 
-		return (ArrayList<Customer>) customerInterface.findAll();
+		// Gets all customers from the CRUDRepo for customer -> CustomerInterface
+		return (ArrayList<Customer>) custInt.findAll();
 	}
 
 	public Customer save(Customer customer) {
 
-		
-		return customerInterface.save(customer);
+		// Passes customer to be saved to the CRUDRepo for customer
+		return custInt.save(customer);
 	}
 
 	

@@ -4,9 +4,12 @@ package com.sales.controllers;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,12 +20,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.sales.models.Product;
 import com.sales.services.ProductService;
 
-// Controller
 @Controller
 public class ProductController {
+	
 	@Autowired
 	private ProductService prodS;
-
+	private org.springframework.security.core.Authentication auth;
 	
 // List Products page ---------------------------------------------------------------------------------------
 	
@@ -30,12 +33,13 @@ public class ProductController {
 	@RequestMapping(value = "/showProducts", method = RequestMethod.GET)
 	public String showProduct(Model m) {
 
-		// Gets all products in product arraylist
+		// Get all products from product service, same them to array
 		ArrayList<Product> products = prodS.getAll();
 
 		// Add to product model object
 		m.addAttribute("products", products);
 
+		// Display showProducts page
 		return "showProducts";
 	}
 	
@@ -55,21 +59,38 @@ public class ProductController {
 
 		if (result.hasErrors()) {
 			
+			// Refresh the Add Product page - won't add the invalid details
 			return "addProduct";
 		
 		} else {
-			// Save Product to database
+			// Pass the product to the Product Service for saving
 			prodS.save(prod);
 
-			// Get products from database, save into arraylist
+			// New product arraylist - get all products from product service, including new one
 			ArrayList<Product> products = prodS.getAll();
 			
 			// Add to product model object
 			m.addAttribute("products", products);
 			
+			// Display the showProducts page
 			return "showProducts";
 		}
 	}
-
+	
+	
+// Log out ------------------------------------------------------------------------------------------------------
+	
+	// Tried to put logout functionality in its own controller but didn't work
+	// Won't work if this method is in all controllers either so keeping it here
+	// Seems to work perfectly anyway
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
+		auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null) {
+			new SecurityContextLogoutHandler().logout(request, response, auth);
+		}
+		return "redirect:/login?logout";
+	}
 
 }

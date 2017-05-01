@@ -26,11 +26,12 @@ table, th, td {
 			</tr>
 			<tr>
 				<c:forEach items="${customer.orders}" var="order">
-					<tr>
-						<td>${order.oId}</td>
-						<td>${order.qty}</td>
-						<td>${order.prod.pId}</td>
-						<td>${order.prod.pDesc}</td>
+				<tr>
+					<td>${order.oId}</td>
+					<td>${order.qty}</td>
+					<td>${order.prod.pId}</td>
+					<td>${order.prod.pDesc}</td>
+				</tr>
 				</c:forEach>
 			</tr>
 		</table>

@@ -1,0 +1,30 @@
+package com.sales.services;
+
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sales.models.Customer;
+import com.sales.repositories.CustomerInterface;
+
+@Service
+public class CustomerService {
+
+	@Autowired
+	private CustomerInterface customerInterface;
+
+	public ArrayList<Customer> getAll() {
+
+		// Gets all customers from the CRUDRepository for customer -> CustomerInterface
+		return (ArrayList<Customer>) customerInterface.findAll();
+	}
+
+	public Customer save(Customer customer) {
+
+		// Passes customer to be saved to the CRUDRepo for customer, same as above
+		return customerInterface.save(customer);
+	}
+
+	
+}

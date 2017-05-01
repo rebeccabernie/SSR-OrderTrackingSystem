@@ -21,11 +21,11 @@ table, th, td {
 		</tr>
 		<tr>
 			<c:forEach items="${products}" var="product">
-				<tr>
-					<td>${product.pId}</td>
-					<td>${product.pDesc}</td>
-					<td>${product.qtyInStock}</td>
-				</tr>
+			<tr>
+				<td>${product.pId}</td>
+				<td>${product.pDesc}</td>
+				<td>${product.qtyInStock}</td>
+			</tr>
 			</c:forEach>
 		</tr>
 	</table>

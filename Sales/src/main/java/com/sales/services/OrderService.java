@@ -7,9 +7,10 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sales.exceptions.EmptyID;
-import com.sales.exceptions.NonExistID;
-import com.sales.exceptions.InvalidQty;
+//import com.sales.exceptions.EmptyID;
+//import com.sales.exceptions.NonExistID;
+//import com.sales.exceptions.InvalidQty;
+
 import com.sales.models.*;
 import com.sales.repositories.*;
 
@@ -33,7 +34,8 @@ public class OrderService {
 
 	// Get Orders
 	public ArrayList<Order> getAll() {
-
+		
+		// Gets all orders from the CRUDRepo for orders -> OrderInterface
 		return (ArrayList<Order>) ordInt.findAll(); 
 	}
 
@@ -43,32 +45,39 @@ public class OrderService {
 		cust = custInt.findOne(ord.getCust().getcId());
 		prod = prodInt.findOne(ord.getProd().getpId());
 		
-		/*
-		if (cust == null || prod == null) 
+		/* Exception stuff
+		 
+		if (ord.getCust().getcId() != cust.getcId() || ord.getProd().getpId() != prod.getpId()) 
 		{
-			throw new EmptyID("Please enter an ID.");
+			throw new NonExistID("This ID doesn't exist. Please navigate back to the previous page.");
 		}
-		else if (ord.getCust().getcId() != cust.getcId() || ord.getProd().getpId() != prod.getpId()) 
+		else if (cust == null || prod == null) 
 		{
-			throw new NonExistID("This ID doesn't exist.");
+			throw new EmptyID("Please enter an ID. Please navigate back to the previous page.");
 		}
 		else if(ord.getQty() > prod.getQtyInStock())
 		{
-			throw new InvalidQty("Not enough stock!");
+			throw new InvalidQty("Not enough stock! Please navigate back to the previous page.");
 		}
 		else 
-		{*/
-			prod.setQtyInStock(prod.getQtyInStock() - ord.getQty());
+		{ do save stuff } */
+		
+		
+		// Update quantity in stock
+		prod.setQtyInStock(prod.getQtyInStock() - ord.getQty());
+		
+		// Set order date to today
+		ord.setOrderDate(dateFormat.format(date));
+		
+		// Set order's customer name to the customer name provided
+		ord.getCust().setcName(cust.getcName());
+		
+		// Set order's product description
+		ord.getProd().setpDesc(prod.getpDesc());
+		
+		// Passes order to be saved to the CRUDRepo for orders			
+		return ordInt.save(ord);
+		
 			
-			ord.setOrderDate(dateFormat.format(date));
-			
-			ord.getCust().setcName(cust.getcName());
-			
-			ord.getProd().setpDesc(prod.getpDesc());
-			
-			ordInt.save(ord);
-			
-			return ordInt.save(ord);
-		//}
 	}
 }

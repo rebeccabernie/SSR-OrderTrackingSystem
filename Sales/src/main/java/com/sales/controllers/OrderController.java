@@ -8,15 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
-import com.sales.exceptions.EmptyID;
-import com.sales.exceptions.NonExistID;
-import com.sales.exceptions.InvalidQty;
+
+//import com.sales.exceptions.EmptyID;
+//import com.sales.exceptions.NonExistID;
+//import com.sales.exceptions.InvalidQty;
+
 import com.sales.models.Order;
 import com.sales.services.OrderService;
 
@@ -25,20 +25,19 @@ import com.sales.services.OrderService;
 public class OrderController {
 
 	@Autowired
-	private OrderService os;
+	private OrderService ordS;
 	
-	ModelAndView mav = new ModelAndView();
-
-	
-// Display Orders page --------------------------------------------------------------------------------
+// List Orders page --------------------------------------------------------------------------------
 	
 	@RequestMapping(value = "/showOrders", method = RequestMethod.GET)
 	public String showOrder(Model m) {
 
-		ArrayList<Order> orders = os.getAll();
+		// Get all orders from order service, same them to array
+		ArrayList<Order> orders = ordS.getAll();
 
+		// Add orders to the model
 		m.addAttribute("orders", orders);
-
+		
 		return "showOrders";
 	}
 
@@ -54,21 +53,27 @@ public class OrderController {
 	// Save the info
 	@RequestMapping(value = "/addOrder", method = RequestMethod.POST)
 	public String postOrder(@Valid @ModelAttribute("order1") Order o,	
-	BindingResult result, HttpServletRequest h, Model m) /*throws EmptyID, NonExistID, InvalidQty*/{
+	BindingResult result, HttpServletRequest h, Model m) /*throws EmptyID, NonExistID, InvalidQty*/ {
 		
 		if (result.hasErrors()) {
-
+			
+			// Refresh the Add Order page - won't add the incorrect order
 			return "addOrder";
 
 		} else {
-				
-			os.save(o);
-
-			ArrayList<Order> orders = os.getAll();
+		
+			// Pass the order to the Order Service for saving
+			ordS.save(o);
 			
+			// New order arraylist - get all orders from order service, including new one
+			ArrayList<Order> orders = ordS.getAll();
+			
+			// Add the order to the model
 			m.addAttribute("orders", orders);
 
 			return "showOrders";
+				
 		}
 	}
 }
+	

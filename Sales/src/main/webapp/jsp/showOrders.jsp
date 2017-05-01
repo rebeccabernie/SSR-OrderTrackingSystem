@@ -27,7 +27,6 @@ table, th, td {
 				<th>Description</th>
 			</tr>
 			<tr>
-			<tr>
 				<td>${order.qty}</td>
 				<td>${order.orderDate}</td>
 				<td>${order.cust.cId}</td>
